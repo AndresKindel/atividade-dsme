@@ -1,0 +1,27 @@
+{
+  "name": "atividade-dsme",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndresKindel/atividade-dsme.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndresKindel/atividade-dsme/issues"
+  },
+  "homepage": "https://github.com/AndresKindel/atividade-dsme#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.1",
+    "express-http-proxy": "^2.1.1",
+    "morgan": "^1.10.0",
+    "sqlite3": "^5.1.7"
+  }
+}
