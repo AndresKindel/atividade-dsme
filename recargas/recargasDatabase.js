@@ -12,7 +12,6 @@ db.run(
   `CREATE TABLE IF NOT EXISTS recargas (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
     usuario_id INTEGER NOT NULL, 
-    posto_id INTEGER NOT NULL, 
     valor REAL NOT NULL, 
     data TEXT NOT NULL, 
     status TEXT NOT NULL

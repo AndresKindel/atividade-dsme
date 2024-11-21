@@ -7,9 +7,12 @@ app.use(logger("dev"));
 
 // TODO: implementar as rotas e colocar aqui
 function selectProxyHost(req) {
-  //   if (req.path.startsWith("/Cadastro")) return "http://localhost:8080/";
-  //   else if (req.path.startsWith("/Pontos")) return "http://localhost:8090/";
-  //   else return null;
+  if (req.path.startsWith("/usuarios")) return "http://localhost:8070/";
+  else if (req.path.startsWith("/recargas")) return "http://localhost:8050/";
+  else if (req.path.startsWith("/postos")) return "http://localhost:8080";
+  else if (req.path.startsWith("/estacoes")) return "http://localhost:8060";
+  else if (req.path.startsWith("/cobrancas")) return "http://localhost:8040";
+  else return null;
 }
 
 app.use((req, res, next) => {

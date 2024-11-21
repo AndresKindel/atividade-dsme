@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("./recargasDatabase");
 const router = express.Router();
+const axios = require("axios");
 
 router.post("/recargas", (req, res) => {
   const { usuario_id, valor, data, status } = req.body;
@@ -14,14 +15,45 @@ router.post("/recargas", (req, res) => {
   db.run(
     `INSERT INTO recargas (usuario_id, valor, data, status) VALUES (?, ?, ?, ?)`,
     [usuario_id, valor, data, status],
-    function (err) {
+    async function (err) {
       if (err) {
         console.error(err.message);
         return res.status(500).json({ error: "Erro ao criar a recarga." });
       }
-      res
-        .status(201)
-        .json({ id: this.lastID, message: "Recarga criada com sucesso!" });
+
+      try {
+        const axiosIniciarResponse = await axios.get(
+          "http://localhost:8060/estacoes/iniciar",
+          {
+            params: { usuario_id },
+          }
+        );
+
+        // TODO LUIZ: adicionar requisiçoes para cobrança
+
+        const axiosFinalizarResponse = await axios.get(
+          "http://localhost:8060/estacoes/finalizar",
+          {
+            params: { usuario_id },
+          }
+        );
+
+        res.status(201).json({
+          message: "Recarga criada com sucesso!",
+          estacoesIniciarResponse: axiosIniciarResponse.data,
+          estacoesFinalizarResponde: axiosFinalizarResponse.data,
+        });
+      } catch (axiosError) {
+        console.error("Error making Axios request:", axiosError.message);
+
+        res.status(201).json({
+          message:
+            "Recarga criada, mas houve um problema ao notificar a estação.",
+          estacoesError: axiosError.response
+            ? axiosError.response.data
+            : axiosError.message,
+        });
+      }
     }
   );
 });
