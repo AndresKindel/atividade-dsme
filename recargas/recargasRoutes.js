@@ -21,6 +21,8 @@ router.post("/recargas", (req, res) => {
         return res.status(500).json({ error: "Erro ao criar a recarga." });
       }
 
+      const recargaId = this.lastID;
+
       try {
         const axiosIniciarResponse = await axios.get(
           "http://localhost:8060/estacoes/iniciar",
@@ -29,7 +31,16 @@ router.post("/recargas", (req, res) => {
           }
         );
 
-        // TODO LUIZ: adicionar requisiçoes para cobrança
+        const axiosCobrancaResponse = await axios.post(
+          "http://localhost:8040/cobrancas",
+          {
+            recarga_id: recargaId,
+            usuario_id,
+            valor,
+          }
+        );
+
+        const cobrancaId = axiosCobrancaResponse.data.id;
 
         const axiosFinalizarResponse = await axios.get(
           "http://localhost:8060/estacoes/finalizar",
@@ -41,6 +52,7 @@ router.post("/recargas", (req, res) => {
         res.status(201).json({
           message: "Recarga criada com sucesso!",
           estacoesIniciarResponse: axiosIniciarResponse.data,
+          cobrancaResponse: axiosCobrancaResponse.data,
           estacoesFinalizarResponde: axiosFinalizarResponse.data,
         });
       } catch (axiosError) {
