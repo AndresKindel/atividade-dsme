@@ -40,8 +40,12 @@ router.post("/recargas", (req, res) => {
           }
         );
 
-        const cobrancaId = axiosCobrancaResponse.data.id;
+        const cobrancaId = axiosCobrancaResponse.data?.id;
 
+        const axiosAtualizarCobrancaResponse = await axios.put(
+          `http://localhost:8040/cobrancas/${cobrancaId}`
+        );
+        
         const axiosFinalizarResponse = await axios.get(
           "http://localhost:8060/estacoes/finalizar",
           {
@@ -53,6 +57,7 @@ router.post("/recargas", (req, res) => {
           message: "Recarga criada com sucesso!",
           estacoesIniciarResponse: axiosIniciarResponse.data,
           cobrancaResponse: axiosCobrancaResponse.data,
+          cobrancaAtualizarResponse: axiosAtualizarCobrancaResponse.data,
           estacoesFinalizarResponde: axiosFinalizarResponse.data,
         });
       } catch (axiosError) {

@@ -69,7 +69,7 @@ router.put("/cobrancas/:id", (req, res) => {
       if (this.changes === 0) {
         return res.status(404).json({ error: "Cobrança não encontrada." });
       }
-      res.json({ message: "Cobrança atualizada para efetuado com sucesso!" });
+      res.json({ message: "Cobrança efetuada com sucesso!" });
     }
   );
 });
