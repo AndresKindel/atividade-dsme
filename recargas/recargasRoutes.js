@@ -3,6 +3,7 @@ const db = require("./recargasDatabase");
 const router = express.Router();
 const axios = require("axios");
 
+// Criar recarga
 router.post("/recargas", (req, res) => {
   const { usuario_id, valor, data, status } = req.body;
 
@@ -75,6 +76,7 @@ router.post("/recargas", (req, res) => {
   );
 });
 
+// Listar recargas
 router.get("/recargas", (req, res) => {
   db.all(`SELECT * FROM recargas`, [], (err, rows) => {
     if (err) {
@@ -100,6 +102,7 @@ router.get("/recargas/:id", (req, res) => {
   });
 });
 
+// Atualizar recarga
 router.put("/recargas/:id", (req, res) => {
   const { id } = req.params;
   const { usuario_id, valor, data, status } = req.body;
@@ -125,6 +128,7 @@ router.put("/recargas/:id", (req, res) => {
   );
 });
 
+// Delete recarga
 router.delete("/recargas/:id", (req, res) => {
   const { id } = req.params;
 

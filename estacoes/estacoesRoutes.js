@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+// Inicia estacao
 router.get("/estacoes/iniciar", (req, res) => {
   const { usuario_id } = req.query;
 
@@ -13,6 +14,7 @@ router.get("/estacoes/iniciar", (req, res) => {
   });
 });
 
+// Finaliza estacao
 router.get("/estacoes/finalizar", (req, res) => {
   const { usuario_id } = req.query;
 

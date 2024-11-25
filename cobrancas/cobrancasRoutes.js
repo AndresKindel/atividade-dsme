@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("./cobrancasDatabase");
 const router = express.Router();
 
+// Criar cobrança
 router.post("/cobrancas", (req, res) => {
   const { recarga_id, usuario_id, valor } = req.body;
 
@@ -33,6 +34,7 @@ router.post("/cobrancas", (req, res) => {
   );
 });
 
+// Listar cobranças
 router.get("/cobrancas", (req, res) => {
   db.all(`SELECT * FROM cobrancas`, [], (err, rows) => {
     if (err) {
@@ -43,6 +45,7 @@ router.get("/cobrancas", (req, res) => {
   });
 });
 
+// Retorna uma cobrança específica
 router.get("/cobrancas/:id", (req, res) => {
   const { id } = req.params;
   db.get(`SELECT * FROM cobrancas WHERE id = ?`, [id], (err, row) => {
@@ -50,11 +53,13 @@ router.get("/cobrancas/:id", (req, res) => {
       console.error(err.message);
       return res.status(500).json({ error: "Erro ao buscar a cobrança." });
     }
-    if (!row) return res.status(404).json({ error: "Cobrança não encontrada." });
+    if (!row)
+      return res.status(404).json({ error: "Cobrança não encontrada." });
     res.json(row);
   });
 });
 
+// Atualiza uma cobrança
 router.put("/cobrancas/:id", (req, res) => {
   const { id } = req.params;
 
@@ -74,6 +79,7 @@ router.put("/cobrancas/:id", (req, res) => {
   );
 });
 
+// Remove uma cobrança
 router.delete("/cobrancas/:id", (req, res) => {
   const { id } = req.params;
 

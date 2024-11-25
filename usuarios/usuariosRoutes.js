@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("./usuariosDatabase");
 
-// Cadastro de usuário
+// Cadastro usuário
 router.post("/usuarios", (req, res) => {
   const { nome, cpf, email, cartao_credito } = req.body;
 
@@ -21,7 +21,7 @@ router.post("/usuarios", (req, res) => {
   );
 });
 
-// Retorna todos os usuários
+// Listar usuários
 router.get("/usuarios", (req, res) => {
   db.all(`SELECT * FROM usuarios`, [], (err, result) => {
     if (err) {
