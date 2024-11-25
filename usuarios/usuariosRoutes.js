@@ -58,8 +58,8 @@ router.patch("/usuarios/:cpf", (req, res) => {
 
   db.run(
     `UPDATE usuarios 
-            SET nome = COALESCE(?, nome), 
-                email = COALESCE(?, email), 
+            SET nome = COALESCE(?, nome),
+                email = COALESCE(?, email),
                 cartao_credito = COALESCE(?, cartao_credito)
             WHERE cpf = ?`,
     [nome, email, cartao_credito, req.params.cpf],

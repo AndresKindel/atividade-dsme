@@ -45,7 +45,7 @@ router.post("/recargas", (req, res) => {
         const axiosAtualizarCobrancaResponse = await axios.put(
           `http://localhost:8040/cobrancas/${cobrancaId}`
         );
-        
+
         const axiosFinalizarResponse = await axios.get(
           "http://localhost:8060/estacoes/finalizar",
           {
@@ -104,14 +104,13 @@ router.put("/recargas/:id", (req, res) => {
   const { id } = req.params;
   const { usuario_id, valor, data, status } = req.body;
 
-  if (!usuario_id || !valor || !data || !status) {
-    return res
-      .status(400)
-      .json({ error: "Campos obrigatórios: usuario_id, valor, data, status." });
-  }
-
   db.run(
-    `UPDATE recargas SET usuario_id = ?, valor = ?, data = ?, status = ? WHERE id = ?`,
+    `UPDATE recargas 
+            SET usuario_id = COALESCE(?, usuario_id), 
+                valor = COALESCE(?, valor), 
+                data = COALESCE(?, data), 
+                status = COALESCE(?, status) 
+            WHERE id = ?`,
     [usuario_id, valor, data, status, id],
     function (err) {
       if (err) {
