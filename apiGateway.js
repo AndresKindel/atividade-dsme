@@ -5,7 +5,6 @@ var logger = require("morgan");
 
 app.use(logger("dev"));
 
-// TODO: implementar as rotas e colocar aqui
 function selectProxyHost(req) {
   if (req.path.startsWith("/usuarios")) return "http://localhost:8070/";
   else if (req.path.startsWith("/recargas")) return "http://localhost:8050/";
